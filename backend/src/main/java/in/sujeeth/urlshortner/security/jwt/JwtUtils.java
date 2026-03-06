@@ -26,7 +26,7 @@ public class JwtUtils {
 //    Authorization -> Bearer token
     public String extractTokenFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null || bearerToken.startsWith("Bearer ")) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return null;
@@ -57,8 +57,6 @@ public class JwtUtils {
     }
 
     private Key getKey() {
-        System.out.println("Key: " + jwtSecret);
-        System.out.println("Key :" + Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret)));
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
