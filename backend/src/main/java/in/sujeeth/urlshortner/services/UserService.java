@@ -2,6 +2,7 @@ package in.sujeeth.urlshortner.services;
 
 import in.sujeeth.urlshortner.dtos.SigninRequest;
 import in.sujeeth.urlshortner.dtos.SignupRequest;
+import in.sujeeth.urlshortner.dtos.UrlMappingDto;
 import in.sujeeth.urlshortner.models.User;
 import in.sujeeth.urlshortner.repositories.UserRepository;
 import in.sujeeth.urlshortner.security.jwt.JwtAuthenticationResponse;
@@ -11,10 +12,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 @Service
 @AllArgsConstructor
@@ -46,5 +46,10 @@ public class UserService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         String token = jwtUtils.generateToken(userDetails);
         return new JwtAuthenticationResponse(token);
+    }
+
+    public User getUserByUsername(String name) {
+        return userRepository.findByUsername(name)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }
