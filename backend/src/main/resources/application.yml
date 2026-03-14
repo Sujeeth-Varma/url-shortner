@@ -2,9 +2,9 @@ spring:
   application:
     name: backend
   datasource:
-    url: jdbc:mysql://localhost:3306/testdb
+    url: jdbc:postgresql://localhost:5432/shorturls
     username: myuser
-    password: mypass
+    password: mypassword
   jpa:
     hibernate:
       ddl-auto: update
