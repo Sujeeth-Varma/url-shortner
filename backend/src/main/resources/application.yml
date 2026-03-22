@@ -11,3 +11,6 @@ spring:
 jwt:
   base64key: ${your_jwt_secret}
   expiration: 172800000 # 2days
+
+cors:
+  allowed-origins: "http://localhost:5173"
