@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -26,8 +29,8 @@ public class UserService {
     private AuthenticationManager authenticationManager;
 
     public User signupUser(SignupRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("User already exists with given email id");
+        if (userRepository.existsByEmail(request.getEmail()) || userRepository.existsByUsername(request.getUsername())) {
+            throw new RuntimeException("User already exists with given email id or username");
         }
         User user = User.builder()
                 .username(request.getUsername())
